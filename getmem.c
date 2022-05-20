@@ -10,5 +10,6 @@
 #include <stdlib.h>
 
 #include "mem.h"
+#include "mem_impl.h"
 
 void* getmem(uintptr_t size) { return NULL; }
