@@ -4,11 +4,11 @@
  * Memory Manager
  * freemem.c
  * implementation of freemem function
-*/
+ */
 
-#include <mem.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-void freemem(void* p) {
-}
+#include "mem.h"
+
+void freemem(void* p) {}

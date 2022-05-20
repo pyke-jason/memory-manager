@@ -4,11 +4,11 @@
  * Memory Manager
  * print_heap.c
  * implementation of print_heap function
-*/
+ */
 
-#include <stdlib.h>
 #include <stdio.h>
-#include <mem_impl.h>
+#include <stdlib.h>
 
-void print_heap(FILE * f) {
-}
+#include "mem_impl.h"
+
+void print_heap(FILE* f) {}

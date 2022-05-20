@@ -4,12 +4,11 @@
  * Memory Manager
  * getmem.c
  * implementation of getmem function
-*/
+ */
 
-#include <mem.h>
-#include <stdlib.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-void* getmem(uintptr_t size) {
-    return NULL;
-}
+#include "mem.h"
+
+void* getmem(uintptr_t size) { return NULL; }

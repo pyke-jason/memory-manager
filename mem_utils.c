@@ -4,12 +4,12 @@
  * Memory Manager
  * mem_utils.c
  * implementation of check_heap function
-*/
+ */
 
-#include <mem.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <mem_impl.h>
+#include <stdlib.h>
 
-void check_heap() {
-}
+#include "mem.h"
+#include "mem_impl.h"
+
+void check_heap() {}
