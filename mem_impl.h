@@ -8,8 +8,8 @@
  * files, but that is not part of the public interface, which is declared in file mem.h.
 */
 
-#ifndef MEM_IMPL_H
-#define MEM_IMPL_H
+#ifndef MEM_IMPL_H_
+#define MEM_IMPL_H_
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 /* Free list data structure will consist of nodes that contain size of usable memory for the node
  * and a pointer to the next node in the list */
 typedef struct Node {
-    struct Node* next; // pointer to the next node
+    struct Node* next;  // pointer to the next node
     uintptr_t size;  // size of usable memory
 } Node;
 
@@ -41,4 +41,4 @@ uintptr_t n_free_blocks;
  * If an error is detected, assert fails and causes the program to terminate at that point. */
 void check_heap();
 
-#endif //MEM_IMPL_H
+#endif  // MEM_IMPL_H_
