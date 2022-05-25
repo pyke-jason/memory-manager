@@ -7,7 +7,7 @@
 
 CC=gcc
 CFLAGS=-std=c17 -Wall -g
-OFILES =bench.o getmem.o freemem.o get_mem_stats.o mem_utils.o
+OFILES =bench.o getmem.o freemem.o get_mem_stats.o mem_utils.o print_heap.o
 
 bench: $(OFILES)
 	$(CC) $(CFLAGS) -o bench $(OFILES)
@@ -15,7 +15,7 @@ bench: $(OFILES)
 test: bench
 	./bench
 
-bench.o: bench.c mem.h mem_impl.h
+bench.o: bench.c mem.h
 	$(CC) $(CFLAGS) -c bench.c
 
 getmem.o: getmem.c mem_utils.c mem.h mem_impl.h
