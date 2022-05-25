@@ -14,6 +14,5 @@
 #include <stdlib.h>
 
 #include "mem.h"
-#include "mem_impl.h"
 
 int main(int argc, char **argv) { return EXIT_SUCCESS; }
