@@ -30,5 +30,7 @@ get_mem_stats.o: get_mem_stats.c mem.h
 mem_utils.o: mem_utils.c mem.h mem_impl.h
 	$(CC) $(CFLAGS) -c mem_utils.c
 
+print_heap.o: print_heap.c
+
 clean:
 	rm -f *.o t9 *~
