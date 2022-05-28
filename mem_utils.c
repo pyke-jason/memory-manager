@@ -33,10 +33,9 @@ void check_heap() {
             // asserting blocks are ordered with increasing memory addresses
             assert((uintptr_t)current < (uintptr_t)nextNode);
             // asserting blocks do not overlap and are not touching
-            assert((uintptr_t)current + current->size + OFFSET <=
+            assert((uintptr_t)current + current->size + OFFSET <
                    (uintptr_t)nextNode);
         }
-
         current = current->next;
     }
 }
