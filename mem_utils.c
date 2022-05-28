@@ -8,8 +8,35 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-#include "mem.h"
-#include "mem_impl.h"
+#include <mem.h>
+#include <mem_impl.h>
 
-void check_heap() {}
+#define MIN_SIZE 16
+
+void check_heap() {
+    // If no free list
+    if (!head) {
+        return;
+    }
+
+    Node *current = head;
+
+    while (current != NULL) {
+
+        // asserting block sizes > minimum size
+        assert(current -> size >= MIN_SIZE);
+
+        Node *nextNode = current -> next;
+
+        if (nextNode != NULL) {
+            // asserting blocks are ordered with increasing memory addresses
+            assert( (uintptr_t) current < (uintptr_t) nextNode);
+            // asserting blocks do not overlap and are not touching
+            assert( (uintptr_t) current + current -> size + OFFSET < (uintptr_t) nextNode);
+        }
+
+        current = current -> next;
+    }
+}
