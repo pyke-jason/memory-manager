@@ -24,10 +24,10 @@ typedef struct Node {
 
 
 // add free list data structure
-Node* list;
-uintptr_t total_size;
-uintptr_t total_free;
-uintptr_t n_free_blocks;
+Node* head;
+uintptr_t total_size_glob;
+uintptr_t total_free_glob;
+uintptr_t n_free_blocks_glob;
 
 /* checks for possible problems with the free list data structure.
  * uses assert to verify that the free list has the following properties:
