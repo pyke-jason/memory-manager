@@ -7,8 +7,18 @@
  */
 
 #include <stdio.h>
-#include <stdlib.h>
+#include <mem_impl.h>
 
-#include "mem_impl.h"
+void print_heap(FILE * f) {
+    printf("Printing heap:\n");
+    Node* current = head;
 
-void print_heap(FILE* f) {}
+    while (current != NULL) {
+        // format: Address: [address], Length: [length]
+        fprintf(f, "Address: %", PRIuPTR, (uintptr_t) current);
+        fprintf(f, ", Length: %", PRIuPTR, current -> size);
+        fprintf(f, "\n");
+        current = current -> next;
+    }
+    fprintf(f, "End of heap");
+}
