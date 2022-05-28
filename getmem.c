@@ -13,7 +13,8 @@
 #include "mem_impl.h"
 
 #define BIG_BLOCK_SIZE 32768
-#define MIN_BLOCK_SIZE 128
+#define MIN_BLOCK_SIZE 16
+
 void *add_node()
 {
     Node *res = (Node *)malloc(BIG_BLOCK_SIZE);
@@ -66,8 +67,6 @@ void *getmem(uintptr_t size)
     }
 
     // free node we are taking memory from is substantially large
-    printf("current size: %ld, alloc size: %ld\n", current->size, size);
-
     if (current->size - size > MIN_BLOCK_SIZE + 16)
     {
         Node *replacement_node = (Node *)((uintptr_t)current + size + 16);
@@ -79,7 +78,6 @@ void *getmem(uintptr_t size)
     }
     total_free_glob -= current->size + 16;
     n_free_blocks_glob -= 1;
-    print_heap(stdout);
     // remove allocated node from free list
     if (prev == NULL)
     {
