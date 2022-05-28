@@ -8,8 +8,8 @@
 
 #include <stdio.h>
 
-#include <mem.h>
-#include <mem_impl.h>
+#include "mem.h"
+#include "mem_impl.h"
 
 void freemem(void* p) {
 
@@ -22,6 +22,7 @@ void freemem(void* p) {
 
     Node* new_node = (Node*) ((uintptr_t) p - 16);
     Node* right = (Node*) ((uintptr_t) new_node + new_node -> size + 16);
+    print_heap(stdout);
 
     // updating bytes in free list
     total_free_glob += new_node -> size + 16;

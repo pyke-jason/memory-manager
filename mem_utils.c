@@ -10,8 +10,8 @@
 #include <stdlib.h>
 #include <assert.h>
 
-#include <mem.h>
-#include <mem_impl.h>
+#include "mem.h"
+#include "mem_impl.h"
 
 #define MIN_SIZE 16
 

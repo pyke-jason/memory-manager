@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <mem.h>
+#include "mem.h"
 
 int main(int argc, char **argv) {
 
@@ -78,10 +78,10 @@ int main(int argc, char **argv) {
         if (i % (ntrials / 10) == 0) {
             get_mem_stats(&total_size, &total_free, &n_free_blocks);
 
-
-            printf("Total number of blocks on free storage list: %lu", n_free_blocks);
-            printf("Average number of bytes in free storage blocks: %.2f\n", total_free / n_free_blocks);
-
+            printf("Total number of blocks on free storage list: %lu\n", n_free_blocks);
+            if(n_free_blocks > 0){
+            printf("Average number of bytes in free storage blocks: %.2ld\n", total_free / n_free_blocks);
+            }
 
         }
 
