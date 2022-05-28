@@ -13,14 +13,9 @@
 #include <inttypes.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <mem_impl.h>
 
-#include "mem_impl.h"
-
-// Dont know where to define these yet...
-Node* head;
-uintptr_t total_size;
-uintptr_t total_free;
-uintptr_t n_free_blocks;
+#define OFFSET 16
 
 /* size:    minimum size desired for memory (bytes)
  * returns: pointer to a new block of storage with at least size bytes of memory
@@ -45,6 +40,6 @@ void get_mem_stats(uintptr_t* total_size, uintptr_t* total_free,
 
 /* f: file to print to
  * prints a formatted listing on file f showing the blocks on the free list */
-void print_heap(FILE* f);
+void print_heap(FILE * f);
 
 #endif  // MEM_H_
