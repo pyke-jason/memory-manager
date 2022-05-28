@@ -6,9 +6,9 @@
  * implementation of check_heap function
  */
 
+#include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <assert.h>
 
 #include "mem.h"
 #include "mem_impl.h"
@@ -24,19 +24,19 @@ void check_heap() {
     Node *current = head;
 
     while (current != NULL) {
-
         // asserting block sizes > minimum size
-        assert(current -> size >= MIN_SIZE);
+        assert(current->size >= MIN_SIZE);
 
-        Node *nextNode = current -> next;
+        Node *nextNode = current->next;
 
         if (nextNode != NULL) {
             // asserting blocks are ordered with increasing memory addresses
-            assert( (uintptr_t) current < (uintptr_t) nextNode);
+            assert((uintptr_t)current < (uintptr_t)nextNode);
             // asserting blocks do not overlap and are not touching
-            assert( (uintptr_t) current + current -> size + OFFSET <= (uintptr_t) nextNode);
+            assert((uintptr_t)current + current->size + OFFSET <=
+                   (uintptr_t)nextNode);
         }
 
-        current = current -> next;
+        current = current->next;
     }
 }
