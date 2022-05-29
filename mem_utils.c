@@ -16,6 +16,7 @@
 #define MIN_SIZE 16
 
 void check_heap() {
+#ifndef DNDEBUG
     // If no free list
     if (!head) {
         return;
@@ -36,4 +37,5 @@ void check_heap() {
         }
         current = current->next;
     }
+#endif
 }

@@ -79,7 +79,7 @@ int main(int argc, char **argv) {
                 n_free_blocks > 0 ? total_free / (double)n_free_blocks : 0;
             printf(
 
-                "CPU TIME: %.3fns | Total storage: %lu, total free storage "
+                "CPU TIME: %.3fs | Total storage: %lu, total free storage "
                 "blocks: %lu, avg free block bytes: %.2f\n",
                 (double)clock() / CLOCKS_PER_SEC, total_size_glob,
                 n_free_blocks, avg);
