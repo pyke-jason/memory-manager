@@ -13,7 +13,7 @@ bench: $(OFILES)
 	$(CC) $(CFLAGS) -o bench $(OFILES)
 
 test: bench
-	./bench
+	./bench 1000000
 
 bench.o: bench.c mem.h
 	$(CC) $(CFLAGS) -c bench.c
