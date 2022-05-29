@@ -54,7 +54,8 @@ void freemem(void* p) {
 
     // if both adjacent blocks have same address
     if (right && right == nextNode && left && left == prev) {
-        prev->size = prev->size + new_node->size + nextNode->size + (OFFSET * 2);
+        prev->size =
+            prev->size + new_node->size + nextNode->size + (OFFSET * 2);
         prev->next = right->next;
         n_free_blocks_glob -= 1;
     } else if (right && right == nextNode) {
