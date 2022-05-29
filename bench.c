@@ -14,7 +14,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
-#include <mem.h>
+#include "mem.h"
 
 int main(int argc, char **argv) {
 
