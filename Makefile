@@ -33,4 +33,4 @@ mem_utils.o: mem_utils.c mem.h mem_impl.h
 print_heap.o: print_heap.c
 
 clean:
-	rm -f *.o t9 *~
+	rm -f *.o bench *~
