@@ -25,13 +25,11 @@ void *getmem(uintptr_t size) {
     if (size <= 0) {
         return NULL;
     }
-    printf("getmem\n");
     check_heap();
     // round size to nearest 16
     size = (size / 16 + 1) * 16;
     // empty free list
     if (head == NULL) {
-        printf("head head head\n");
         head = add_node();
         total_free_glob += head->size + 16;
         n_free_blocks_glob += 1;

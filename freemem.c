@@ -15,7 +15,6 @@ void freemem(void* p) {
     if (p == NULL) {
         return;
     }
-    printf("freemem\n");
     check_heap();
     Node* nextNode = head;
     Node* prev = NULL;
@@ -62,19 +61,13 @@ void freemem(void* p) {
 
     // acquiring address of left adjacent block, prev corresponds to left
 
-    printf("new_node: %ld right: %ld, left: %ld, nextNode: %ld, prev: %ld\n",
-           (uintptr_t)new_node, (uintptr_t)right, (uintptr_t)left,
-           (uintptr_t)nextNode, (uintptr_t)prev);
     // if both adjacent blocks have same address
     if (right && right == nextNode && left && left == prev) {
-        printf("both adjacent blocks have same address\n");
         prev->size = prev->size + new_node->size + nextNode->size + (16 * 2);
         prev->next = right->next;
         n_free_blocks_glob -= 1;
     } else if (right && right == nextNode) {
         // only right adjacent has same address
-        printf("only right adjacent has same address\n");
-
         new_node->size = new_node->size + nextNode->size + 16;
         new_node->next = nextNode->next;
         if (prev) {
@@ -82,14 +75,10 @@ void freemem(void* p) {
         }
     } else if (left && left == prev) {
         // only left adjacent has same address
-        printf("only left adjacent has same address\n");
-
         prev->size = prev->size + new_node->size + 16;
         prev->next = nextNode;
     } else {
         // neither, inserting between adjacent blocks
-        printf("neither, inserting between adjacent blocks\n");
-
         new_node->next = nextNode;
         if (prev) {
             prev->next = new_node;
