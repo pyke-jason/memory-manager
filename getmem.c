@@ -15,25 +15,23 @@
 #define BIG_BLOCK_SIZE 32768
 #define MIN_BLOCK_SIZE 16
 
-void *add_node()
-{
+void *add_node() {
     Node *res = (Node *)malloc(BIG_BLOCK_SIZE);
     res->size = BIG_BLOCK_SIZE - 16;
     res->next = NULL;
     return res;
 }
-void *getmem(uintptr_t size)
-{
-    if (size <= 0)
-    {
+void *getmem(uintptr_t size) {
+    if (size <= 0) {
         return NULL;
     }
+    printf("getmem\n");
     check_heap();
     // round size to nearest 16
     size = (size / 16 + 1) * 16;
     // empty free list
-    if (head == NULL)
-    {
+    if (head == NULL) {
+        printf("head head head\n");
         head = add_node();
         total_free_glob += head->size + 16;
         n_free_blocks_glob += 1;
@@ -41,21 +39,18 @@ void *getmem(uintptr_t size)
     Node *current = head;
     Node *prev = NULL;
     // haven't found large enough memory block
-    while (current != NULL && current->size < size)
-    {
+    while (current != NULL && current->size < size) {
         prev = current;
         current = current->next;
     }
 
     // couldn't find big enough block
-    if (current == NULL)
-    {
+    if (current == NULL) {
         Node *new_node = add_node();
         total_free_glob += new_node->size + 16;
         current = head;
         // current mem address is less than new node mem address
-        while (current != NULL && (current < new_node))
-        {
+        while (current != NULL && (current < new_node)) {
             prev = current;
             current = current->next;
         }
@@ -67,8 +62,7 @@ void *getmem(uintptr_t size)
     }
 
     // free node we are taking memory from is substantially large
-    if (current->size - size > MIN_BLOCK_SIZE + 16)
-    {
+    if (current->size - size > MIN_BLOCK_SIZE + 16) {
         Node *replacement_node = (Node *)((uintptr_t)current + size + 16);
         replacement_node->size = current->size - size - 16;
         replacement_node->next = current->next;
@@ -79,12 +73,9 @@ void *getmem(uintptr_t size)
     total_free_glob -= current->size + 16;
     n_free_blocks_glob -= 1;
     // remove allocated node from free list
-    if (prev == NULL)
-    {
+    if (prev == NULL) {
         head = current->next;
-    }
-    else
-    {
+    } else {
         prev->next = current->next;
     }
     check_heap();

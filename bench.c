@@ -19,12 +19,12 @@
 
 int main(int argc, char **argv) {
     // Setting parameters to default and/or arguments
-    int ntrials = 1000;
-    int pctget = argc > 2 ? atoi(argv[2]) : 50;
-    int pctlarge = argc > 3 ? atoi(argv[3]) : 10;
-    int small_limit = argc > 4 ? atoi(argv[4]) : 200;
-    int large_limit = argc > 5 ? atoi(argv[5]) : 2000;
-    int random_seed = argc > 6 ? atoi(argv[6]) : clock();
+    int ntrials = argc > 2 ? atoi(argv[3]) : 100000;
+    int pctget = argc > 3 ? atoi(argv[3]) : 50;
+    int pctlarge = argc > 4 ? atoi(argv[4]) : 10;
+    int small_limit = argc > 5 ? atoi(argv[5]) : 200;
+    int large_limit = argc > 6 ? atoi(argv[6]) : 20000;
+    int random_seed = argc > 7 ? atoi(argv[7]) : clock();
 
     void *memory[ntrials];
     int req_size;

@@ -15,8 +15,9 @@ void freemem(void* p) {
     if (p == NULL) {
         return;
     }
-
-    Node* current = head;
+    printf("freemem\n");
+    check_heap();
+    Node* nextNode = head;
     Node* prev = NULL;
 
     Node* new_node = (Node*)((uintptr_t)p - 16);
@@ -25,67 +26,74 @@ void freemem(void* p) {
     // updating bytes in free list
     total_free_glob += new_node->size + 16;
 
-    // list is empty
-    if (current == NULL) {
-        head = new_node;
-        new_node->next = NULL;
-        n_free_blocks_glob += 1;
-        check_heap();
-        return;
-    }
-
     // current mem address is less than new node mem address
-    while (current != NULL && (current < right)) {
-        prev = current;
-        current = current->next;
+    while (nextNode != NULL && (nextNode <= new_node)) {
+        prev = nextNode;
+        nextNode = nextNode->next;
     }
 
     // front of list
     if (prev == NULL) {
         // if head has same mem address, merge
-        if (right == head) {
-            new_node->next = head->next;
-            new_node->size = new_node->size + head->size + 16;
-        } else {
-            new_node->next = head;
-            n_free_blocks_glob += 1;
-        }
+        // if (right == head) {
+        //     new_node->next = head->next;
+        //     new_node->size = new_node->size + head->size + 16;
+        // } else {
+        // }
+        new_node->next = head;
+        n_free_blocks_glob += 1;
         head = new_node;
-        return;
     }
 
-    // reached the end of list, mem address must be greater than all node's mem
-    // address
-    if (current == NULL) {
+    // reached the end of list, mem address must be greater than all node's
+    // mem address
+    else if (nextNode == NULL) {
         prev->next = new_node;
         new_node->next = NULL;
         n_free_blocks_glob += 1;
-        check_heap();
-        return;
+    }
+
+    Node* left = NULL;
+    if (prev != NULL) {
+        left = (Node*)((uintptr_t)new_node - prev->size - 16);
     }
 
     // in between nodes, current mem address > new_node mem address
 
     // acquiring address of left adjacent block, prev corresponds to left
-    Node* left = (Node*)((uintptr_t)prev + prev->size + 16);
 
+    printf("new_node: %ld right: %ld, left: %ld, nextNode: %ld, prev: %ld\n",
+           (uintptr_t)new_node, (uintptr_t)right, (uintptr_t)left,
+           (uintptr_t)nextNode, (uintptr_t)prev);
     // if both adjacent blocks have same address
-    if (right == current && left == prev) {
-        prev->next = current->next;
-        prev->size = prev->size + new_node->size + current->size + (16 * 2);
+    if (right && right == nextNode && left && left == prev) {
+        printf("both adjacent blocks have same address\n");
+        prev->size = prev->size + new_node->size + nextNode->size + (16 * 2);
+        prev->next = right->next;
         n_free_blocks_glob -= 1;
-    } else if (right == current) {
+    } else if (right && right == nextNode) {
         // only right adjacent has same address
-        new_node->next = current->next;
-        prev->next = new_node;
-        new_node->size = new_node->size + current->size + 16;
-    } else if (left == prev) {
+        printf("only right adjacent has same address\n");
+
+        new_node->size = new_node->size + nextNode->size + 16;
+        new_node->next = nextNode->next;
+        if (prev) {
+            prev->next = new_node;
+        }
+    } else if (left && left == prev) {
         // only left adjacent has same address
+        printf("only left adjacent has same address\n");
+
         prev->size = prev->size + new_node->size + 16;
+        prev->next = nextNode;
     } else {
         // neither, inserting between adjacent blocks
-        new_node->next = current;
-        prev->next = new_node;
+        printf("neither, inserting between adjacent blocks\n");
+
+        new_node->next = nextNode;
+        if (prev) {
+            prev->next = new_node;
+        }
         n_free_blocks_glob += 1;
     }
     check_heap();
