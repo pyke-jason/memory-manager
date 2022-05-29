@@ -33,12 +33,6 @@ void freemem(void* p) {
 
     // front of list
     if (prev == NULL) {
-        // if head has same mem address, merge
-        // if (right == head) {
-        //     new_node->next = head->next;
-        //     new_node->size = new_node->size + head->size + 16;
-        // } else {
-        // }
         new_node->next = head;
         n_free_blocks_glob += 1;
         head = new_node;
@@ -58,7 +52,6 @@ void freemem(void* p) {
     }
 
     // in between nodes, current mem address > new_node mem address
-
     // acquiring address of left adjacent block, prev corresponds to left
 
     // if both adjacent blocks have same address
