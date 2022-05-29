@@ -12,19 +12,19 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
 #include <time.h>
-
-#include "mem.h"
+#include <string.h>
+#include <mem.h>
 
 int main(int argc, char **argv) {
+
     // Setting parameters to default and/or arguments
-    int ntrials = argc > 2 ? atoi(argv[3]) : 100000;
-    int pctget = argc > 3 ? atoi(argv[3]) : 50;
-    int pctlarge = argc > 4 ? atoi(argv[4]) : 10;
-    int small_limit = argc > 5 ? atoi(argv[5]) : 200;
-    int large_limit = argc > 6 ? atoi(argv[6]) : 20000;
-    int random_seed = argc > 7 ? atoi(argv[7]) : clock();
+    int ntrials = 1000;
+    int pctget = argc > 2 ? atoi(argv[2]) : 50;
+    int pctlarge = argc > 3 ? atoi(argv[3]) : 10;
+    int small_limit = argc > 4 ? atoi(argv[4]) : 200;
+    int large_limit = argc > 5 ? atoi(argv[5]) : 2000;
+    int random_seed = argc > 6 ? atoi(argv[6]) : clock();
 
     void *memory[ntrials];
     int req_size;
@@ -36,7 +36,9 @@ int main(int argc, char **argv) {
 
     srand(random_seed);
 
+
     for (int i = 0; i < ntrials; i += 1) {
+
         // if random chance says getmem
         if (rand() % 100 <= pctget) {
             // if random chance says allocate large block
@@ -49,8 +51,7 @@ int main(int argc, char **argv) {
             memory[end_idx] = getmem(req_size);
 
             if (memory[end_idx] != NULL) {
-                // storing 0xFE in each of first min(16, req_size) bytes of ptr
-                // returned by getmem
+                // storing 0xFE in each of first min(16, req_size) bytes of ptr returned by getmem
 
                 int fill_size = 16;
                 if (req_size < 16) {
@@ -60,8 +61,9 @@ int main(int argc, char **argv) {
                 end_idx += 1;
             }
 
+
         } else {
-            // freemem case
+            //freemem case
             if (end_idx > 0) {
                 // freeing memory of random previously allocated block
                 int free_idx = rand() % end_idx;
@@ -75,14 +77,15 @@ int main(int argc, char **argv) {
         // printing statistics to stdout
         if (i % (ntrials / 10) == 0) {
             get_mem_stats(&total_size, &total_free, &n_free_blocks);
-
-            printf("Total number of blocks on free storage list: %lu\n",
-                   n_free_blocks);
-            if (n_free_blocks > 0) {
-                printf(
-                    "Average number of bytes in free storage blocks: %.2ld\n",
-                    total_free / n_free_blocks);
-            }
+            printf("Total CPU time (seconds): %.2f\n", (float) clock () / CLOCKS_PER_SEC);
+            printf("Total amount of storage acquired from the underlying system: $lu\n", total_size);
+            printf("Total number of blocks on free storage list: %lu\n", n_free_blocks);
+            printf("Average number of bytes in free storage blocks: %.2f\n", total_free / (double) n_free_blocks);
         }
+
+
     }
+
+
+
 }
