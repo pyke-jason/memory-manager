@@ -18,10 +18,10 @@ test: bench
 bench.o: bench.c mem.h
 	$(CC) $(CFLAGS) -c bench.c
 
-getmem.o: getmem.c mem_utils.c mem.h mem_impl.h
+getmem.o: getmem.c mem.h mem_impl.h
 	$(CC) $(CFLAGS) -c getmem.c
 
-freemem.o: freemem.c mem_utils.c mem.h mem_impl.h
+freemem.o: freemem.c mem.h mem_impl.h
 	$(CC) $(CFLAGS) -c freemem.c
 
 get_mem_stats.o: get_mem_stats.c mem.h
