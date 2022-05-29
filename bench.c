@@ -75,14 +75,14 @@ int main(int argc, char **argv) {
         // printing statistics to stdout
         if (i % (ntrials / 10) == 0) {
             get_mem_stats(&total_size, &total_free, &n_free_blocks);
+            double avg =
+                n_free_blocks > 0 ? total_free / (double)n_free_blocks : 0;
+            printf(
 
-            printf("Total number of blocks on free storage list: %lu\n",
-                   n_free_blocks);
-            if (n_free_blocks > 0) {
-                printf(
-                    "Average number of bytes in free storage blocks: %.2ld\n",
-                    total_free / n_free_blocks);
-            }
+                "CPU TIME: %.3fns | Total storage: %lu, total free storage "
+                "blocks: %lu, avg free block bytes: %.2f\n",
+                (double)clock() / CLOCKS_PER_SEC, total_size_glob,
+                n_free_blocks, avg);
         }
     }
 }

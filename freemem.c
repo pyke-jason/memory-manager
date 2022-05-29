@@ -19,11 +19,11 @@ void freemem(void* p) {
     Node* nextNode = head;
     Node* prev = NULL;
 
-    Node* new_node = (Node*)((uintptr_t)p - 16);
-    Node* right = (Node*)((uintptr_t)new_node + new_node->size + 16);
+    Node* new_node = (Node*)((uintptr_t)p - OFFSET);
+    Node* right = (Node*)((uintptr_t)new_node + new_node->size + OFFSET);
 
     // updating bytes in free list
-    total_free_glob += new_node->size + 16;
+    total_free_glob += new_node->size + OFFSET;
 
     // current mem address is less than new node mem address
     while (nextNode != NULL && (nextNode <= new_node)) {
@@ -36,11 +36,9 @@ void freemem(void* p) {
         new_node->next = head;
         n_free_blocks_glob += 1;
         head = new_node;
-    }
-
-    // reached the end of list, mem address must be greater than all node's
-    // mem address
-    else if (nextNode == NULL) {
+    } else if (nextNode == NULL) {
+        // reached the end of list, mem address must be greater than all node's
+        // mem address
         prev->next = new_node;
         new_node->next = NULL;
         n_free_blocks_glob += 1;
@@ -48,7 +46,7 @@ void freemem(void* p) {
 
     Node* left = NULL;
     if (prev != NULL) {
-        left = (Node*)((uintptr_t)new_node - prev->size - 16);
+        left = (Node*)((uintptr_t)new_node - prev->size - OFFSET);
     }
 
     // in between nodes, current mem address > new_node mem address
@@ -56,19 +54,19 @@ void freemem(void* p) {
 
     // if both adjacent blocks have same address
     if (right && right == nextNode && left && left == prev) {
-        prev->size = prev->size + new_node->size + nextNode->size + (16 * 2);
+        prev->size = prev->size + new_node->size + nextNode->size + (OFFSET * 2);
         prev->next = right->next;
         n_free_blocks_glob -= 1;
     } else if (right && right == nextNode) {
         // only right adjacent has same address
-        new_node->size = new_node->size + nextNode->size + 16;
+        new_node->size = new_node->size + nextNode->size + OFFSET;
         new_node->next = nextNode->next;
         if (prev) {
             prev->next = new_node;
         }
     } else if (left && left == prev) {
         // only left adjacent has same address
-        prev->size = prev->size + new_node->size + 16;
+        prev->size = prev->size + new_node->size + OFFSET;
         prev->next = nextNode;
     } else {
         // neither, inserting between adjacent blocks
