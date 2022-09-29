@@ -21,4 +21,4 @@ For 1 million calls to freemem and getmem, CPU time took about 41 seconds and al
 
 ## Credits
 
-Created with Ara Vardanyan
+Created with Ara Vardanyan in my Intermediate Programming Concepts and Tools class for UW.
