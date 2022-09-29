@@ -8,8 +8,6 @@ The free list is a linked list consisting of nodes with fields size and next. Th
 
 
 ## Benchmarks (Preliminary)
-- A summary of the results you observed on several runs of your bench program. This does not need to be exhaustive (and should not be exhausting), but it should give the reader an idea of how your code worked,
-  how fast it was, and how efficient it was in its use of memory.
 
 CPU TIME: 40.916ns | Total storage: 29163520, total free storage blocks: 38782, avg free block bytes: 145.72
 
