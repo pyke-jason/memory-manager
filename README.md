@@ -13,9 +13,6 @@ CPU TIME: 40.916ns | Total storage: 29163520, total free storage blocks: 38782, 
 
 For 1 million calls to freemem and getmem, CPU time took about 41 seconds and allocated in total about 3 million bytes of memory. By the end of the benchmark, there were 38,382 total free blocks of storage with an average of 145.72 free bytes per block.
 
-## Notes & Future Work
-
-- `getmem` 
 
 ## Credits
 
